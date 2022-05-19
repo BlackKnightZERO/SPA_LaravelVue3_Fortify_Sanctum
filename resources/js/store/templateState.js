@@ -7,6 +7,7 @@ export const useTemplateStateStore = defineStore('templateStore',{
             logoThumbnail:null
         }
     }),
+    persist: true,
 
     getters: {
         logo(state){

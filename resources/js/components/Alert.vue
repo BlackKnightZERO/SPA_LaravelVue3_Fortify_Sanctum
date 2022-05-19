@@ -34,15 +34,20 @@
         </div>
 </template>
 
+<script setup>
+import { defineProps } from 'vue'
+const props = defineProps(['msg', 'type'])
+</script>
+
 <script>
-export default {
-  props: ['msg', 'type'],
-  setup(props) {
-    return {
-      props
-    }
-  }
-}
+// export default {
+//   props: ['msg', 'type'],
+//   setup(props) {
+//     return {
+//       props
+//     }
+//   }
+// }
 </script>
 
 <style>
