@@ -23,20 +23,5 @@ use App\Http\Controllers\PageController;
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/@/dashboard', [PageController::class, 'index'])->name('spa.dashboard');
-//     Route::get('/@/{any}', [PageController::class, 'index'])->where('any', '.*');
-// });
-
-// require __DIR__.'/auth.php';
-
-// Route::get('/login', function(){
-//     return response()->json([
-//         'status' => 200,
-//         'message' => 'Redirected to Login',
-//         'data' => null
-//     ], 200);
-// })->name('login');
-
 Route::get('/', [PageController::class, 'setup2'])->name('spa.setup');
 Route::get('/{any}', [PageController::class, 'setup2'])->where('any', '.*');
