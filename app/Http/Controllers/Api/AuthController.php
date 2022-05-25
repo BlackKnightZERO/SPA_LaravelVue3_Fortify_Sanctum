@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Auth\Events\Registered;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -52,13 +53,13 @@ class AuthController extends Controller
             'phone' => $request->phone,
         ]);
 
-        // event(new Registered($user));
+        event(new Registered($user));
 
         return response()->json([
             'status' => 201,
             'message' => 'Registered',
             'data' => $user,
-        ], 200);
+        ], 201);
 
     }
 
