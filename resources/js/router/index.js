@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/authState'
 import WebRoutes from './web.js'
 
 import Dashboard from '../pages/dashboard/Dashboard'
+import Add from '../pages/dashboard/Add'
 
 const routes = [
 
@@ -12,6 +13,12 @@ const routes = [
         path: '/dashboard',
         name: 'spa.dashboard',
         component: Dashboard,
+        meta : { auth : true }
+    },
+    {
+        path: '/add',
+        name: 'spa.add',
+        component: Add,
         meta : { auth : true }
     },
 ]

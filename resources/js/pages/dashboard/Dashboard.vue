@@ -4,10 +4,10 @@
     <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 py-6">Dashboard</h2>
 
       <div class="flex flex-row-reverse">
-      <button
-        class="px-4 py-2 mb-2 text-white transition-colors duration-200 transform bg-blue-600 rounded hover:bg-blue-600 focus:outline-none"
+      <router-link to="/add"
+        class="px-4 py-2 mb-2 text-white transition-colors duration-200 transform bg-blue-600 rounded hover:bg-blue-500 focus:outline-none"
         type="button"
-        >+ Add</button>
+        >+ Add</router-link>
         <br>
         </div>
 
@@ -103,57 +103,6 @@ import LaravelVuePagination from 'laravel-vue-pagination';
       getResults()
     })
     
-</script>
-
-
-<script>
-// import { useAuthStore } from '../../store/authState'
-// import { computed, ref, onMounted, toRefs } from 'vue'
-// import axios from 'axios'
-// import LaravelVuePagination from 'laravel-vue-pagination';
-
-// export default {
-
-//   data() {
-//     return {
-//         show: null,
-//     };
-//   },
-//   components: {
-//       'Pagination': LaravelVuePagination
-//   },
-
-//   setup() {
-
-//     const authStore = useAuthStore()
-//     const artists = ref(null)
-//     const laravelData = ref({})
-
-//     const loggedInUser = computed(() => {
-//       return authStore.$state.auth.name
-//     })
-
-//     const getResults = async(page = 1) => {
-//             await axios({
-//                 method: 'GET',
-//                 url: '/api/artists?page=' + page,
-//                 data: {}
-//             }).then(response => {
-//                 artists.value = response.data.data
-//                 laravelData.value = response.data
-//             });
-//     }
-
-//     onMounted(() => {
-//       const myNewComponent = defineComponent({
-//         'Pagination': LaravelVuePagination,
-//       });
-//       getResults()
-//     })
-
-//     return { loggedInUser, artists, getResults, laravelData }
-//   }
-// }
 </script>
 
 <style>

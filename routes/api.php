@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\ArtistController;
+use App\Http\Controllers\Api\ArtistCategoryController;
 use App\Http\Controllers\Api\AuthController;
 
 /*
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('artists', ArtistController::class);
+    Route::resource('artist-category', ArtistCategoryController::class);
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
