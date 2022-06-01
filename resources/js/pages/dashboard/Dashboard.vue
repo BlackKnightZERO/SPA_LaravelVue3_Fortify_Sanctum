@@ -3,6 +3,14 @@
 
     <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 py-6">Dashboard</h2>
 
+      <div class="flex flex-row-reverse">
+      <button
+        class="px-4 py-2 mb-2 text-white transition-colors duration-200 transform bg-blue-600 rounded hover:bg-blue-600 focus:outline-none"
+        type="button"
+        >+ Add</button>
+        <br>
+        </div>
+
     <div class="bg-white shadow-lg hover:shadow-xl rounded-md overflow-hidden">
         <table class="table flex table-auto w-full leading-normal">
           <thead class="uppercase text-gray-600 text-xs font-semibold bg-gray-200">

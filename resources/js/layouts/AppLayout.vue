@@ -3,7 +3,7 @@
     <div>
       <Header v-if="authStatus" />
       <div class="container mx-auto px-4">
-        <Alert v-if="isAlert" :msg="alertMsg" :type="alertType" />  
+        <Alert v-show="isAlert" :msg="alertMsg" :type="alertType" />  
         <router-view></router-view>
       </div>
     </div>
