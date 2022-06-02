@@ -25,10 +25,11 @@ class ArtistRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'image' => 'sometimes|required',
-            'description' => 'sometimes|required',
-            'nationality' => 'sometimes|required',
-            'date_of_birth' => 'sometimes|required',
+            'artist_category_id' => 'required',
+            'image' => 'sometimes',
+            'description' => 'sometimes',
+            'nationality' => 'sometimes',
+            'date_of_birth' => 'sometimes',
         ];
     }
 }

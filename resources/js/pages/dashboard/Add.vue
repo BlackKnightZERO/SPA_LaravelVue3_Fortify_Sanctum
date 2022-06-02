@@ -9,24 +9,38 @@
                 <div class="w-full mt-4">
                     <input 
                     class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" 
-                    type="email" placeholder="Title" aria-label="Title"
+                    type="text" placeholder="Title" aria-label="Title"
                     autofocus v-model="title"
                     />
                 </div>
 
                 <div class="w-full mt-4">
-                    <textarea placeholder="Bio" rows="5" class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" ></textarea>
+                    <textarea
+                    placeholder="Bio"
+                    rows="5"
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                    v-model="description"></textarea>                
                 </div>
 
                 <div class="w-full mt-4">
-                    <input type="file">
+                    <input type="file" v-on:change="storeImage">
                 </div>
 
                 <div class="w-full mt-4">
-                    <select class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" >
+                    <select
+                      class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                      @change="selctCategory">
                         <option disabled value="" selected>Type</option>
-                        <option value="" v-for="(category) in artistCategory" :key="category.id">{{ category.title }}</option>
+                        <option :value="category.id" v-for="(category) in artistCategory" :key="category.id">{{ category.title }}</option>
                     </select>
+                </div>
+
+                <div class="w-full mt-4">
+                    <input 
+                    class="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" 
+                    type="text" placeholder="Nationality" aria-label="Nationality"
+                    autofocus v-model="nationality"
+                    />
                 </div>
 
                 <div class="flex items-center justify-end mt-4 gap-1">
@@ -41,6 +55,14 @@
                 </div>
 
             </form>
+            <br>
+            <div class="border-t-2 border-red-500" v-show="validationError.length > 0">
+                <ul>
+                    <li class="text-red-700" v-for="(verror, index) in validationError" :key="index">
+                        * {{ verror }}
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -52,6 +74,12 @@ import { ref, onMounted } from 'vue'
 const artistCategory = ref(null)
 
 const title = ref(null)
+const description = ref(null)
+const artist_category_id = ref(null)
+const image = ref(null)
+const nationality = ref(null)
+
+const validationError = ref([])
 
 const getResults = async(page = 1) => {
             await axios({
@@ -62,6 +90,43 @@ const getResults = async(page = 1) => {
                 artistCategory.value = response.data.data
             });
     }
+
+const submitForm = async () => {
+    let txt = ``
+    validationError.value=[]
+    const url = `api/artists`
+    const response = await axios.post(url, {
+        title: title.value,
+        description: description.value,
+        artist_category_id : artist_category_id.value,
+        image: image.value,
+        nationality: nationality.value
+    }).then(res=> {
+        console.log(res)
+    }).catch(err =>{
+        if (err.response){
+            if(err.response.status===422){
+                for (const [key, value] of Object.entries(err.response.data.errors)) {
+                        validationError.value.push(value[0])
+                    }
+            }
+        } else if (err.request) {
+            console.log(`request error`)
+            console.error(err.request);
+        } else {
+            console.error(err);
+        }
+    })
+}
+
+const storeImage = (e) => {
+    console.log(e.target.value)
+    image.value = e.target.value
+}    
+const selctCategory = (e) => {
+    console.log(e.target.value)
+    artist_category_id.value = e.target.value
+}    
 
 onMounted(() => {
     getResults()

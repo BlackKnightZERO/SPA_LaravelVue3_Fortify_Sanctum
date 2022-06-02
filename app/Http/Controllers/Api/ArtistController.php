@@ -28,7 +28,8 @@ class ArtistController extends Controller
      */
     public function store(ArtistRequest $request)
     {
-        //
+        $validated = $request->validated();
+        return $validated;
     }
 
     /**

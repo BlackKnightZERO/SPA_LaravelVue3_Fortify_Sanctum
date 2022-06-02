@@ -47,7 +47,7 @@
                                 <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Your projects </a>
                                 <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Help </a>
                                 <a href="#" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Settings </a>
-                                <router-link to="/logout" @click.stop.prevent="logout" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Sign Out </router-link>
+                                <router-link to="/logout" @click.prevent="logout" class="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"> Sign Out </router-link>
                             </div>
                       </div>
                         
@@ -62,10 +62,13 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/authState'
+import { useNetworkStore } from '../store/networkState'
+
 import { ref } from 'vue'
 import axios from 'axios'
 
     const authStore = useAuthStore()
+    const networkStore = useNetworkStore()
     const dropDownRef = ref(false)
     const router = useRouter()
     
@@ -76,6 +79,7 @@ import axios from 'axios'
                 data: {}
             }).then(response => {
                 authStore.resetAuth()
+                networkStore.reset()
                 router.push('/')
             })
     }
