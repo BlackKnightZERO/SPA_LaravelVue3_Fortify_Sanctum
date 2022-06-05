@@ -20,7 +20,7 @@ return new class extends Migration
                     ->constrained()
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->string('image')->nullable();
+            $table->string('image')->default('default.png');
             $table->text('description')->nullable();
             $table->string('nationality')->nullable();
             $table->date('date_of_birth')->nullable();

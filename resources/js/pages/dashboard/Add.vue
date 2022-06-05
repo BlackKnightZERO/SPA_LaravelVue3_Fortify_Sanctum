@@ -70,6 +70,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useNetworkStore } from '../../store/networkState'
+
+const router = useRouter()
+const networkStore = useNetworkStore()
 
 const artistCategory = ref(null)
 
@@ -95,17 +100,26 @@ const submitForm = async () => {
     let txt = ``
     validationError.value=[]
     const url = `api/artists`
+
     const response = await axios.post(url, {
         title: title.value,
         description: description.value,
         artist_category_id : artist_category_id.value,
         image: image.value,
         nationality: nationality.value
-    }).then(res=> {
-        console.log(res)
+    })
+    // }, { headers: {'content-type': 'multipart/form-data' }})
+    .then(res=> {
+        if(res.status===201) {
+            networkStore.setSuccess('Saved Successfully')
+            networkStore.setIsSuccess(true)
+            networkStore.setSuccessStatus(201)
+            router.push('/dashboard')
+        }
     }).catch(err =>{
         if (err.response){
             if(err.response.status===422){
+                console.log(err.response)
                 for (const [key, value] of Object.entries(err.response.data.errors)) {
                         validationError.value.push(value[0])
                     }
@@ -120,11 +134,9 @@ const submitForm = async () => {
 }
 
 const storeImage = (e) => {
-    console.log(e.target.value)
-    image.value = e.target.value
+    image.value = e.target.files[0]
 }    
 const selctCategory = (e) => {
-    console.log(e.target.value)
     artist_category_id.value = e.target.value
 }    
 

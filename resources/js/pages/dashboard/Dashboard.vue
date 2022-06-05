@@ -33,7 +33,7 @@
             </tr>
           </thead>
           <tbody class="flex-1 text-gray-700 sm:flex-none">
-              <tr v-for="artist in artists" :key="artist.id" 
+              <tr v-for="(artist, index) in artists" :key="artist.id" 
               class="border-t first:border-t-0 flex p-1 md:p-3 hover:bg-gray-100 md:table-row flex-col w-full flex-wrap">
                 <td class="p-1 md:p-3">
                     <label class="text-xs text-gray-500 uppercase font-semibold md:hidden" for="">ID</label>
@@ -58,7 +58,7 @@
                             <path d="M12 6a2 2 0 110-4 2 2 0 010 4zm0 8a2 2 0 110-4 2 2 0 010 4zm-2 6a2 2 0 104 0 2 2 0 00-4 0z" />
                         </svg>
                     </button>
-                    <button type="button" class="inline-block text-gray-600 hover:text-gray-700">
+                    <button @click="destroy(artist.id, index)" type="button" class="inline-block text-gray-600 hover:text-gray-700">
                         <span class="text-red-600 hover:text-red-400 font-semibold mx-1">Delete</span>
                         <svg class="hidden inline-block h-6 w-6 fill-current" viewBox="0 0 24 24">
                             <path d="M12 6a2 2 0 110-4 2 2 0 010 4zm0 8a2 2 0 110-4 2 2 0 010 4zm-2 6a2 2 0 104 0 2 2 0 00-4 0z" />
@@ -76,11 +76,14 @@
 
 <script setup>
 import { useAuthStore } from '../../store/authState'
+import { useNetworkStore } from '../../store/networkState'
 import { computed, ref, onMounted, defineComponent } from 'vue'
 import axios from 'axios'
 import LaravelVuePagination from 'laravel-vue-pagination';
 
     const authStore = useAuthStore()
+    const networkStore = useNetworkStore()
+
     const artists = ref(null)
     const laravelData = ref({})
 
@@ -97,6 +100,23 @@ import LaravelVuePagination from 'laravel-vue-pagination';
                 artists.value = response.data.data
                 laravelData.value = response.data
             });
+    }
+
+    const destroy = async(id, index) => {
+
+      if (confirm(`Are you sure?`)) {
+          await axios.delete(`/api/artists/${id}`)
+        .then(res => {
+          if(res.status === 200) {
+            artists.value.splice(index, 1)
+            networkStore.setSuccess('Deleted successfully')
+            networkStore.setIsSuccess(true)
+            networkStore.setSuccessStatus(200)
+          }
+        }).catch(err=> {
+          console.log(err)
+        })
+      }      
     }
 
     onMounted(() => {

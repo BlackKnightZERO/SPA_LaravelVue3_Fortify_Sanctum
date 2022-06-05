@@ -17,7 +17,7 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        return ArtistResource::collection( Artist::with('artistCategory')->paginate(10) );
+        return ArtistResource::collection( Artist::with('artistCategory')->latest('id')->paginate(10) );
     }
 
     /**
@@ -29,7 +29,20 @@ class ArtistController extends Controller
     public function store(ArtistRequest $request)
     {
         $validated = $request->validated();
-        return $validated;
+        $path = null;
+
+        if($request->file()) {
+            $file_name = time().'_'.$request->file->getClientOriginalName();
+            $path = $request->file('image')->storeAs('uploads/artist', $file_name, 'public');
+        }
+
+        return Artist::create([
+            'title' => $validated['title'],
+            'artist_category_id' => $validated['artist_category_id'],
+            'description' => $validated['description'],
+            'nationality' => $validated['nationality'],
+            'image' => $path
+        ]);
     }
 
     /**
@@ -63,6 +76,6 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        //
+        return $artist->delete();
     }
 }

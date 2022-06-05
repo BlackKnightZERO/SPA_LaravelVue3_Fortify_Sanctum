@@ -26,7 +26,7 @@ class ArtistRequest extends FormRequest
         return [
             'title' => 'required',
             'artist_category_id' => 'required',
-            'image' => 'sometimes',
+            'image' => 'file|mimes:jpg,jpeg,png|max:5120|nullable',
             'description' => 'sometimes',
             'nationality' => 'sometimes',
             'date_of_birth' => 'sometimes',
