@@ -52,12 +52,12 @@
                     <div>{{ artist.nationality }}</div>
                 </td>
                 <td class="text-right p-1 md:p-3">
-                    <button type="button" class="inline-block text-gray-600 hover:text-gray-700">
-                        <span class="text-blue-600 hover:text-blue-400 font-semibold mx-1">Edit</span>
+                    <router-link :to="{ name: 'spa.edit', params: { id: artist.id }}" type="button" class="inline-block text-gray-600 hover:text-gray-700">
+                      <span class="text-blue-600 hover:text-blue-400 font-semibold mx-1">Edit</span>
                         <svg class="hidden inline-block h-6 w-6 fill-current" viewBox="0 0 24 24">
                             <path d="M12 6a2 2 0 110-4 2 2 0 010 4zm0 8a2 2 0 110-4 2 2 0 010 4zm-2 6a2 2 0 104 0 2 2 0 00-4 0z" />
                         </svg>
-                    </button>
+                    </router-link>
                     <button @click="destroy(artist.id, index)" type="button" class="inline-block text-gray-600 hover:text-gray-700">
                         <span class="text-red-600 hover:text-red-400 font-semibold mx-1">Delete</span>
                         <svg class="hidden inline-block h-6 w-6 fill-current" viewBox="0 0 24 24">

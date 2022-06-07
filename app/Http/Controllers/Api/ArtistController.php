@@ -29,11 +29,11 @@ class ArtistController extends Controller
     public function store(ArtistRequest $request)
     {
         $validated = $request->validated();
-        $path = null;
+        $imageName = null;
 
-        if($request->file()) {
-            $file_name = time().'_'.$request->file->getClientOriginalName();
-            $path = $request->file('image')->storeAs('uploads/artist', $file_name, 'public');
+        if($request->hasFile('image')){
+            $imageName = time().'-'.rand(1,999).'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('/Uploads/Artist'), $imageName);
         }
 
         return Artist::create([
@@ -41,7 +41,7 @@ class ArtistController extends Controller
             'artist_category_id' => $validated['artist_category_id'],
             'description' => $validated['description'],
             'nationality' => $validated['nationality'],
-            'image' => $path
+            'image' => $imageName
         ]);
     }
 
@@ -53,7 +53,8 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-        //
+        // $artist->load('artistCategory');
+        return $artist;
     }
 
     /**
@@ -65,7 +66,21 @@ class ArtistController extends Controller
      */
     public function update(ArtistRequest $request, Artist $artist)
     {
-        //
+        $validated = $request->validated();
+        $imageName = null;
+
+        if($request->hasFile('image')){
+            $imageName = time().'-'.rand(1,999).'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(public_path('/Uploads/Artist'), $imageName);
+        }
+
+        return $artist->update([
+            'title' => $validated['title'],
+            'artist_category_id' => $validated['artist_category_id'],
+            'description' => $validated['description'],
+            'nationality' => $validated['nationality'],
+            'image' => $imageName
+        ]);
     }
 
     /**

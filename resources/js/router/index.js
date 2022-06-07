@@ -4,6 +4,7 @@ import WebRoutes from './web.js'
 
 import Dashboard from '../pages/dashboard/Dashboard'
 import Add from '../pages/dashboard/Add'
+import Edit from '../pages/dashboard/Edit'
 
 const routes = [
 
@@ -19,6 +20,12 @@ const routes = [
         path: '/add',
         name: 'spa.add',
         component: Add,
+        meta : { auth : true }
+    },
+    {
+        path: '/edit/:id',
+        name: 'spa.edit',
+        component: Edit,
         meta : { auth : true }
     },
 ]

@@ -86,7 +86,7 @@ const nationality = ref(null)
 
 const validationError = ref([])
 
-const getResults = async(page = 1) => {
+const getCategory = async(page = 1) => {
             await axios({
                 method: 'GET',
                 url: '/api/artist-category',
@@ -105,11 +105,9 @@ const submitForm = async () => {
         title: title.value,
         description: description.value,
         artist_category_id : artist_category_id.value,
+        nationality: nationality.value,
         image: image.value,
-        nationality: nationality.value
-    })
-    // }, { headers: {'content-type': 'multipart/form-data' }})
-    .then(res=> {
+    }).then(res=> {
         if(res.status===201) {
             networkStore.setSuccess('Saved Successfully')
             networkStore.setIsSuccess(true)
@@ -141,7 +139,7 @@ const selctCategory = (e) => {
 }    
 
 onMounted(() => {
-    getResults()
+    getCategory()
 })
 
 </script>
