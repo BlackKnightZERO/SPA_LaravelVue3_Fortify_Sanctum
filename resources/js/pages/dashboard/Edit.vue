@@ -104,12 +104,12 @@ const getData = async(id) => {
                 url: `/api/artists/${id}`,
                 data: {}
             }).then(res => {
-                editId.value = parseInt(res.data.id)
-                title.value = res.data.title
-                description.value = res.data.description
-                artist_category_id.value = parseInt(res.data.artist_category_id)
-                image.value = res.data.image
-                nationality.value = res.data.nationality
+                editId.value = parseInt(res.data.data.id)
+                title.value = res.data.data.title
+                description.value = res.data.data.description
+                artist_category_id.value = parseInt(res.data.data.artist_category_id)
+                image.value = res.data.data.image
+                nationality.value = res.data.data.nationality
             });
     }
 

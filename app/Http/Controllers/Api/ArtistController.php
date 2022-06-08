@@ -36,13 +36,15 @@ class ArtistController extends Controller
             $request->file('image')->move(public_path('/Uploads/Artist'), $imageName);
         }
 
-        return Artist::create([
+        $data = Artist::create([
             'title' => $validated['title'],
             'artist_category_id' => $validated['artist_category_id'],
             'description' => $validated['description'],
             'nationality' => $validated['nationality'],
             'image' => $imageName
         ]);
+
+        return new ArtistResource($data);
     }
 
     /**
@@ -54,7 +56,8 @@ class ArtistController extends Controller
     public function show(Artist $artist)
     {
         // $artist->load('artistCategory');
-        return $artist;
+        // return $artist;
+        return new ArtistResource($artist);
     }
 
     /**
@@ -74,13 +77,14 @@ class ArtistController extends Controller
             $request->file('image')->move(public_path('/Uploads/Artist'), $imageName);
         }
 
-        return $artist->update([
+        $artist->update([
             'title' => $validated['title'],
             'artist_category_id' => $validated['artist_category_id'],
             'description' => $validated['description'],
             'nationality' => $validated['nationality'],
             'image' => $imageName
         ]);
+        return new ArtistResource($artist);
     }
 
     /**
@@ -91,6 +95,7 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        return $artist->delete();
+        $artist->delete();
+        return response(null, 204);
     }
 }

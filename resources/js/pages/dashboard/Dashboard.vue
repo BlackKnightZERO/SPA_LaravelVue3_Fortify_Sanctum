@@ -107,11 +107,11 @@ import LaravelVuePagination from 'laravel-vue-pagination';
       if (confirm(`Are you sure?`)) {
           await axios.delete(`/api/artists/${id}`)
         .then(res => {
-          if(res.status === 200) {
+          if(res.status === 204) {
             artists.value.splice(index, 1)
             networkStore.setSuccess('Deleted successfully')
             networkStore.setIsSuccess(true)
-            networkStore.setSuccessStatus(200)
+            networkStore.setSuccessStatus(204)
           }
         }).catch(err=> {
           console.log(err)

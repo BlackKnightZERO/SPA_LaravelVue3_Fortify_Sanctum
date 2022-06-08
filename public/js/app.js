@@ -25352,11 +25352,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _context2.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_4___default()["delete"]("/api/artists/".concat(id)).then(function (res) {
-                  if (res.status === 200) {
+                  if (res.status === 204) {
                     artists.value.splice(index, 1);
                     networkStore.setSuccess('Deleted successfully');
                     networkStore.setIsSuccess(true);
-                    networkStore.setSuccessStatus(200);
+                    networkStore.setSuccessStatus(204);
                   }
                 })["catch"](function (err) {
                   console.log(err);
@@ -25498,12 +25498,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   url: "/api/artists/".concat(id),
                   data: {}
                 }).then(function (res) {
-                  editId.value = parseInt(res.data.id);
-                  title.value = res.data.title;
-                  description.value = res.data.description;
-                  artist_category_id.value = parseInt(res.data.artist_category_id);
-                  image.value = res.data.image;
-                  nationality.value = res.data.nationality;
+                  editId.value = parseInt(res.data.data.id);
+                  title.value = res.data.data.title;
+                  description.value = res.data.data.description;
+                  artist_category_id.value = parseInt(res.data.data.artist_category_id);
+                  image.value = res.data.data.image;
+                  nationality.value = res.data.data.nationality;
                 });
 
               case 3:
